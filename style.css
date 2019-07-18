@@ -11,15 +11,18 @@ body h1 {
 }
 
 #board {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(var(--cols), 1fr);
   grid-template-rows: repeat(var(--rows), 1fr);
+  grid-gap: 2px;
 }
 
 span.space {
   text-align: center;
-  height: 50px;
-  line-height: 50px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   border: 1px solid grey;
+  border-radius: 50%;
 }
 
