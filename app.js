@@ -13,3 +13,20 @@ for (var i = 1; i <= rows * columns; i += 1) {
   board.append(clone)
 }
 
+// Individual Game State
+// This is defined by the state of each spot (red, blue, or grey),
+// which player is which (who's red, who's blue),
+// who's turn it is,
+// if the game is won, lost, tied, or ongoing.
+
+// Actions
+// Clear Board
+// Assign names to players
+// Randomly Choose starting player
+// Player takes turn
+// Game is won
+
+// Events
+// User clicks on spot (available, or not)
+// User clicks start game
+
