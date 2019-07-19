@@ -6,9 +6,7 @@ body {
   padding: 5px;
 }
 
-body h1 {
-  margin-top: 0;
-}
+body h1 { margin-top: 0; }
 
 #board {
   display: inline-grid;
@@ -43,7 +41,5 @@ span.space.blue {
   color: black;
 }
 
-div#messages {
-  margin: 30px 10px;
-}
+div#messages { margin: 30px 10px; }
 
