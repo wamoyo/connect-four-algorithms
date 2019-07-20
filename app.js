@@ -44,8 +44,14 @@ for (var i = 1; i <= rows * columns; i += 1) {
  * 3) Show 'play again' button.
  *
  * User clicks on available spot
+ * 1) That spot becomes 'red' (or blue).
+ * 2) Check if the game is over.
+ * 3) Recalculate and reassign available spots.
  *
  * Computer chooses from available spots
+ * 1) That spot becomes 'blue' (or red).
+ * 2) Check if the game is over.
+ * 3) Recalculate and reassign available spots.
  *
  */
 
