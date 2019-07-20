@@ -22,20 +22,30 @@ for (var i = 1; i <= rows * columns; i += 1) {
   board.append(clone)
 }
 
-// Individual Game State
-// This is defined by the state of each spot (red, blue, or grey),
-// which player is which (who's red, who's blue),
-// who's turn it is,
-// if the game is won, lost, tied, or ongoing.
+// Game State
+
+/*
+ * 1) state of each spot (red, blue, grey, available)
+ * 2) who's turn is it (user, computer)
+ * 3) game state (playing, red wins, blue wins, tie)
+ */
 
 // Actions
-// Clear Board
-// Assign names to players
-// Randomly Choose starting player
-// Player takes turn
-// Game is won
 
-// Events
-// User clicks on spot (available, or not)
-// User clicks start game
+/*
+ * Clear Board
+ * 1) Reset all space classes to just 'space'.
+ * 2) Set available spaces class to 'available'.
+ * 3) Randomly choose starting player.
+ *
+ * Declare End of Game
+ * 1) Remove available from all spaces.
+ * 2) Write 'blue' or 'red' wins, or 'tie game' to the messages.
+ * 3) Show 'play again' button.
+ *
+ * User clicks on available spot
+ *
+ * Computer chooses from available spots
+ *
+ */
 
