@@ -84,8 +84,6 @@ function highestSpaceInCol (col) {
   for (var i = rows - 1; i >= 0; i -= 1) {
     if (col[i].type == 'available' || col[i].type == 'empty') {
       return col[i]
-    } else {
-      console.log('monkey')
     }
   }
 }
