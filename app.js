@@ -2,25 +2,10 @@
 var board = document.getElementById('board')
 var rows = 6
 var columns = 7
+var connect = 4
 
 board.style.setProperty('grid-template-columns', `repeat(${columns}, 1fr)`)
 board.style.setProperty('grid-template-rows', `repeat(${rows}, 1fr)`)
-
-for (var i = 1; i <= rows * columns; i += 1) {
-  var space = document.createElement('template')
-  space.innerHTML = `<span class="space" id="space-${i}">${i}</span>`
-  if (i === 31) space.innerHTML = `<span class="space available" id="space-${i}">${i}</span>`
-  if (i === 32) space.innerHTML = `<span class="space available" id="space-${i}">${i}</span>`
-  if (i === 36) space.innerHTML = `<span class="space available" id="space-${i}">${i}</span>`
-  if (i === 37) space.innerHTML = `<span class="space available" id="space-${i}">${i}</span>`
-  if (i === 40) space.innerHTML = `<span class="space available" id="space-${i}">${i}</span>`
-  if (i === 41) space.innerHTML = `<span class="space available" id="space-${i}">${i}</span>`
-  if (i === 42) space.innerHTML = `<span class="space available" id="space-${i}">${i}</span>`
-  if (i === 38) space.innerHTML = `<span class="space red" id="space-${i}">${i}</span>`
-  if (i === 39) space.innerHTML = `<span class="space blue" id="space-${i}">${i}</span>`
-  var clone = document.importNode(space.content, true)
-  board.append(clone)
-}
 
 // Game State
 
@@ -30,7 +15,97 @@ for (var i = 1; i <= rows * columns; i += 1) {
  * 3) game state (playing, red wins, blue wins, tie)
  */
 
+var gameState = {
+  spaces: []
+}
+
+for (var i = 0; i < rows * columns; i += 1) {
+  gameState.spaces[i] = {type: "empty", num: i}
+}
+
+function drawBoard (spaces) {
+  var template = document.createElement('template')
+  var spacesHTML = ""
+  spaces.forEach(function(space){
+    spacesHTML += makeSpaceHtml(space)
+  })
+  template.innerHTML = spacesHTML
+  var clone = document.importNode(template.content, true)
+  board.innerHTML = ""
+  board.append(clone)
+}
+
+function makeSpaceHtml (space) {
+  return `<span class="space ${space.type}" id="space-${space.num}">${space.num}</span>`
+}
+
+drawBoard(gameState.spaces)
+
+
+
 // Actions
+
+/*
+ * User clicks on available spot
+ * 1) That spot becomes 'red' (or blue).
+ * 2) Check if the game is over.
+ * 3) Recalculate and reassign available spots.
+ */
+
+function getSpaceNode (space) {
+  return document.getElementById(`space-${space.num}`)
+}
+
+
+function setAvailableSpaces (spaces) {
+  var cols = getCols(spaces)
+  cols.forEach(function (col) {
+    var space = highestSpaceInCol(col)
+    console.log(space)
+    space.type = 'available'
+  })
+  drawBoard(spaces)
+  cols.forEach(function (col) {
+    var space = highestSpaceInCol(col)
+    getSpaceNode(space).addEventListener('click', function (event) {
+      makeRed(space)
+    })
+  })
+}
+
+function makeRed (space) {
+  space.type = 'red'
+  setAvailableSpaces(gameState.spaces)
+}
+
+
+// checks the column for any spaces that should be marked 'available'
+function highestSpaceInCol (col) {
+  for (var i = rows - 1; i >= 0; i -= 1) {
+    if (col[i].type == 'available' || col[i].type == 'empty') {
+      return col[i]
+    } else {
+      console.log('monkey')
+    }
+  }
+}
+
+function getCols (spaces) {
+  var cols = []
+  for (var i = 0; i < columns; i += 1) {
+    var col = []
+    for (var j = 0; j < rows; j += 1) {
+      col[j] = spaces[ (columns * j) + i]
+    }
+    cols[i] = col
+  }
+  return cols
+}
+
+setAvailableSpaces(gameState.spaces)
+
+
+
 
 /*
  * Clear Board
@@ -43,10 +118,6 @@ for (var i = 1; i <= rows * columns; i += 1) {
  * 2) Write 'blue' or 'red' wins, or 'tie game' to the messages.
  * 3) Show 'play again' button.
  *
- * User clicks on available spot
- * 1) That spot becomes 'red' (or blue).
- * 2) Check if the game is over.
- * 3) Recalculate and reassign available spots.
  *
  * Computer chooses from available spots
  * 1) That spot becomes 'blue' (or red).

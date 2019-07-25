@@ -22,6 +22,7 @@ span.space {
   border: 1px solid #bbb;
   border-radius: 50%;
   cursor: default;
+  transition: .15s;
 }
 
 span.space.available {
@@ -29,13 +30,17 @@ span.space.available {
   cursor: pointer;
 }
 
-span.space.red {
+span.space.available:hover {
+  transform: scale(1.1);
+}
+
+span.space.blue {
   border-color: #709ef9;
   background: #709ef9;
   color: black;
 }
 
-span.space.blue {
+span.space.red {
   border-color: #f97b70;
   background: #f97b70;
   color: black;
