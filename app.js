@@ -23,6 +23,8 @@ for (var i = 0; i < rows * columns; i += 1) {
   gameState.spaces[i] = {type: "empty", num: i}
 }
 
+drawBoard(gameState.spaces)
+
 function drawBoard (spaces) {
   var template = document.createElement('template')
   var spacesHTML = ""
@@ -39,8 +41,6 @@ function makeSpaceHtml (space) {
   return `<span class="space ${space.type}" id="space-${space.num}">${space.num}</span>`
 }
 
-drawBoard(gameState.spaces)
-
 
 
 // Actions
@@ -52,10 +52,7 @@ drawBoard(gameState.spaces)
  * 3) Recalculate and reassign available spots.
  */
 
-function getSpaceNode (space) {
-  return document.getElementById(`space-${space && space.num}`)
-}
-
+setAvailableSpaces(gameState.spaces)
 
 function setAvailableSpaces (spaces) {
   var cols = getCols(spaces)
@@ -74,21 +71,6 @@ function setAvailableSpaces (spaces) {
   })
 }
 
-function makeRed (space) {
-  space.type = 'red'
-  setAvailableSpaces(gameState.spaces)
-}
-
-
-// checks the column for any spaces that should be marked 'available'
-function highestSpaceInCol (col) {
-  for (var i = rows - 1; i >= 0; i -= 1) {
-    if (col[i].type == 'available' || col[i].type == 'empty') {
-      return col[i]
-    }
-  }
-}
-
 function getCols (spaces) {
   var cols = []
   for (var i = 0; i < columns; i += 1) {
@@ -101,8 +83,23 @@ function getCols (spaces) {
   return cols
 }
 
-setAvailableSpaces(gameState.spaces)
+// checks the column for any spaces that should be marked 'available'
+function highestSpaceInCol (col) {
+  for (var i = rows - 1; i >= 0; i -= 1) {
+    if (col[i].type == 'available' || col[i].type == 'empty') {
+      return col[i]
+    }
+  }
+}
 
+function getSpaceNode (space) {
+  return document.getElementById(`space-${space && space.num}`)
+}
+
+function makeRed (space) {
+  space.type = 'red'
+  setAvailableSpaces(gameState.spaces)
+}
 
 
 
@@ -116,7 +113,6 @@ setAvailableSpaces(gameState.spaces)
  * 1) Remove available from all spaces.
  * 2) Write 'blue' or 'red' wins, or 'tie game' to the messages.
  * 3) Show 'play again' button.
- *
  *
  * Computer chooses from available spots
  * 1) That spot becomes 'blue' (or red).
