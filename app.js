@@ -10,7 +10,7 @@ board.style.setProperty('grid-template-rows', `repeat(${rows}, 1fr)`)
 // Game State
 
 /*
- * 1) state of each spot (red, blue, grey, available)
+ * 1) state of each spot (red, blue, empty, available)
  * 2) who's turn is it (user, computer)
  * 3) game state (playing, red wins, blue wins, tie)
  */
@@ -53,7 +53,7 @@ drawBoard(gameState.spaces)
  */
 
 function getSpaceNode (space) {
-  return document.getElementById(`space-${space.num}`)
+  return document.getElementById(`space-${space && space.num}`)
 }
 
 
@@ -61,15 +61,16 @@ function setAvailableSpaces (spaces) {
   var cols = getCols(spaces)
   cols.forEach(function (col) {
     var space = highestSpaceInCol(col)
-    console.log(space)
-    space.type = 'available'
+    if (space) space.type = 'available'
   })
   drawBoard(spaces)
   cols.forEach(function (col) {
     var space = highestSpaceInCol(col)
-    getSpaceNode(space).addEventListener('click', function (event) {
-      makeRed(space)
-    })
+    if (getSpaceNode(space)) {
+      getSpaceNode(space).addEventListener('click', function (event) {
+        makeRed(space)
+      })
+    }
   })
 }
 
