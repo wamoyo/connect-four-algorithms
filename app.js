@@ -1,11 +1,41 @@
 
 var board = document.getElementById('board')
+var messages = document.getElementById('messages')
 var rows = 6
 var columns = 7
 var connect = 4
 
 board.style.setProperty('grid-template-columns', `repeat(${columns}, 1fr)`)
 board.style.setProperty('grid-template-rows', `repeat(${rows}, 1fr)`)
+
+// Manage Messages
+
+//p.textContent = "Let's play Connect Four!"
+//var p2 = document.createElement('p');
+//p2.textContent = "You can go first."
+//messages.prepend(p)
+//messages.prepend(p2)
+
+print(`Let's play Connect Four!`)
+print(`You go first...`)
+
+// TODO Using promises to solve this.
+
+function print (message) {
+  var p = document.createElement('p');
+  messages.prepend(p)
+  var i = 0
+  var interval = setInterval(function () {
+    if (i < message.length) {
+      p.textContent = p.textContent + message[i]
+      i += 1
+    } else {
+      clearInterval(interval)
+    }
+  }, 100)
+}
+
+
 
 // Game State
 
